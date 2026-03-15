@@ -188,3 +188,12 @@ src
 
 ```bash
 [git clone https://github.com/mshreyat/Drama-Tunes
+
+Navigate to project folder
+cd dramatunes
+Install dependencies
+npm install
+Run development server
+npm run dev
+
+
