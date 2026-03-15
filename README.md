@@ -1,16 +1,190 @@
-# React + Vite
+# 🎵 Dramatunes
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dramatunes is a modern music player web application built using React.  
+The app allows users to explore songs, generate mood-based playlists, search music, and manage liked songs.
 
-Currently, two official plugins are available:
+This project demonstrates frontend development skills using React and modern UI design principles.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+# 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🎵 Music player with play / pause / next / previous controls
+- 🔍 Search songs by title or artist
+- 😊 Mood-based playlists (Happy, Chill, Workout, Romantic)
+- ❤️ Favorites and liked songs
+- 🕒 Recently played songs
+- 🤖 AI Roast feature that humorously analyzes user music taste
+- 📊 Smart playlists generated automatically from song moods
+- 🎧 Modern UI with responsive layout
+- 💾 LocalStorage used for saving favorites and listening history
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# 🛠 Tech Stack
+
+Frontend
+- React
+- JavaScript
+- Tailwind CSS (CDN)
+
+Libraries
+- react-h5-audio-player
+
+Tools
+- Git
+- GitHub
+- Vite
+
+---
+
+# 📂 Project Structure
+# 🎵 Dramatunes
+
+Dramatunes is a modern music player web application built using React.  
+The app allows users to explore songs, generate mood-based playlists, search music, and manage liked songs.
+
+This project demonstrates frontend development skills using React and modern UI design principles.
+
+---
+
+# 🚀 Features
+
+- 🎵 Music player with play / pause / next / previous controls
+- 🔍 Search songs by title or artist
+- 😊 Mood-based playlists (Happy, Chill, Workout, Romantic)
+- ❤️ Favorites and liked songs
+- 🕒 Recently played songs
+- 🤖 AI Roast feature that humorously analyzes user music taste
+- 📊 Smart playlists generated automatically from song moods
+- 🎧 Modern UI with responsive layout
+- 💾 LocalStorage used for saving favorites and listening history
+
+---
+
+# 🛠 Tech Stack
+
+Frontend
+- React
+- JavaScript
+- Tailwind CSS (CDN)
+
+Libraries
+- react-h5-audio-player
+
+Tools
+- Git
+- GitHub
+- Vite
+
+---
+
+# 📂 Project Structure
+# 🎵 Dramatunes
+
+Dramatunes is a modern music player web application built using React.  
+The app allows users to explore songs, generate mood-based playlists, search music, and manage liked songs.
+
+This project demonstrates frontend development skills using React and modern UI design principles.
+
+---
+
+# 🚀 Features
+
+- 🎵 Music player with play / pause / next / previous controls
+- 🔍 Search songs by title or artist
+- 😊 Mood-based playlists (Happy, Chill, Workout, Romantic)
+- ❤️ Favorites and liked songs
+- 🕒 Recently played songs
+- 🤖 AI Roast feature that humorously analyzes user music taste
+- 📊 Smart playlists generated automatically from song moods
+- 🎧 Modern UI with responsive layout
+- 💾 LocalStorage used for saving favorites and listening history
+
+---
+
+# 🛠 Tech Stack
+
+Frontend
+- React
+- JavaScript
+- Tailwind CSS (CDN)
+
+Libraries
+- react-h5-audio-player
+
+Tools
+- Git
+- GitHub
+- Vite
+
+---
+
+# 📂 Project Structure
+# 🎵 Dramatunes
+
+Dramatunes is a modern music player web application built using React.  
+The app allows users to explore songs, generate mood-based playlists, search music, and manage liked songs.
+
+This project demonstrates frontend development skills using React and modern UI design principles.
+
+---
+
+# 🚀 Features
+
+- 🎵 Music player with play / pause / next / previous controls
+- 🔍 Search songs by title or artist
+- 😊 Mood-based playlists (Happy, Chill, Workout, Romantic)
+- ❤️ Favorites and liked songs
+- 🕒 Recently played songs
+- 🤖 AI Roast feature that humorously analyzes user music taste
+- 📊 Smart playlists generated automatically from song moods
+- 🎧 Modern UI with responsive layout
+- 💾 LocalStorage used for saving favorites and listening history
+
+---
+
+# 🛠 Tech Stack
+
+Frontend
+- React
+- JavaScript
+- Tailwind CSS (CDN)
+
+Libraries
+- react-h5-audio-player
+
+Tools
+- Git
+- GitHub
+- Vite
+
+---
+
+# 📂 Project Structure
+src
+├── components
+│ ├── Playlist.jsx
+│ ├── Player.jsx
+│ ├── MoodSelector.jsx
+│ ├── RecentlyPlayed.jsx
+│ └── Favorites.jsx
+│
+├── services
+│ └── musicService.js
+│
+├── utils
+│ ├── playlistEngine.js
+│ └── roastEngine.js
+│
+├── App.jsx
+└── main.jsx
+
+---
+
+# ⚙️ Installation
+
+### Clone the repository
+
+```bash
+[git clone https://github.com/mshreyat/Drama-Tunes
