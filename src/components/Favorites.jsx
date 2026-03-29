@@ -1,14 +1,25 @@
 import { useEffect, useState } from "react"
+import { ref, onValue } from "firebase/database"
+import { db } from "../firebase"
 
 function Favorites(){
 
 const [favorites,setFavorites] = useState([])
 
-useEffect(()=>{
+useEffect(() => {
 
-const stored = JSON.parse(localStorage.getItem("favorites")) || []
+const favRef = ref(db, "favorites")
 
-setFavorites(stored)
+onValue(favRef, (snapshot) => {
+
+const data = snapshot.val()
+
+if(data){
+const favList = Object.values(data)
+setFavorites(favList)
+}
+
+})
 
 },[])
 

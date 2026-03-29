@@ -1,71 +1,110 @@
-function Playlist({ songs, setCurrentSong }) {
+import { useState, useEffect } from "react"
 
-return (
+function Playlist({ songs, setCurrentSong, setSelectedSong, setShowPlaylistPicker }) {
 
-<div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-6">
+  const [favorites, setFavorites] = useState([])
 
-{songs.map(song => (
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("favorites")) || []
+    setFavorites(stored)
+  }, [])
 
-<div
-key={song.id}
-onClick={()=>{
+  const toggleFavorite = (song) => {
+    let updated
+    const exists = favorites.find(s => s.id === song.id)
 
-// play song
-setCurrentSong(song)
+    if (exists) {
+      updated = favorites.filter(s => s.id !== song.id)
+    } else {
+      updated = [...favorites, song]
+    }
 
-// recently played
-let history = JSON.parse(localStorage.getItem("recentSongs")) || []
+    setFavorites(updated)
+    localStorage.setItem("favorites", JSON.stringify(updated))
 
-history.unshift(song)
+    let playlists = JSON.parse(localStorage.getItem("playlists")) || []
+    let favPlaylist = playlists.find(p => p.name === "Favorites")
 
-history = history.slice(0,5)
+    if (!favPlaylist) {
+      favPlaylist = { name: "Favorites", songs: [] }
+      playlists.push(favPlaylist)
+    }
 
-localStorage.setItem("recentSongs",JSON.stringify(history))
+    if (exists) {
+      favPlaylist.songs = favPlaylist.songs.filter(s => s.id !== song.id)
+    } else {
+      favPlaylist.songs.push(song)
+    }
 
-}}
-className="bg-gray-800 p-4 rounded-lg cursor-pointer hover:bg-gray-700 relative"
->
+    localStorage.setItem("playlists", JSON.stringify(playlists))
+  }
 
-{/* Like Button */}
+  const isFavorite = (song) => favorites.some(s => s.id === song.id)
 
-<button
-className="absolute top-2 right-2 text-red-400"
-onClick={(e)=>{
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
 
-e.stopPropagation()
+      {songs.map((song) => (
+        <div
+          key={song.id}
+          className="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-700 transition-all cursor-pointer group"
+        >
 
-let fav = JSON.parse(localStorage.getItem("favorites")) || []
+          {/* Cover Image */}
+          <div className="relative" onClick={() => setCurrentSong(song)}>
+            <img
+              src={song.cover || "https://via.placeholder.com/300"}
+              alt={song.title}
+              className="w-full aspect-square object-cover"
+              onError={(e) => {
+                e.target.src = "https://via.placeholder.com/300"
+              }}
+            />
+            {/* Play overlay on hover */}
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <span className="text-4xl">▶️</span>
+            </div>
+          </div>
 
-if(!fav.find(s => s.id === song.id)){
-fav.push(song)
-}
+          {/* Song Info + Actions */}
+          <div className="p-3 flex justify-between items-center">
 
-localStorage.setItem("favorites",JSON.stringify(fav))
+            <div
+              className="overflow-hidden cursor-pointer"
+              onClick={() => setCurrentSong(song)}
+            >
+              <h3 className="font-semibold text-sm truncate">{song.title}</h3>
+              <p className="text-xs text-gray-400 truncate">{song.artist}</p>
+            </div>
 
-}}
->
-❤️
-</button>
+            {/* Action Buttons */}
+            <div className="flex gap-2 ml-2 shrink-0">
 
-<img
-src={song.cover}
-className="rounded mb-3"
-/>
+              <button
+                onClick={() => toggleFavorite(song)}
+                className={isFavorite(song) ? "text-red-500" : "text-gray-400"}
+              >
+                {isFavorite(song) ? "❤️" : "🤍"}
+              </button>
 
-<h4 className="font-semibold">{song.title}</h4>
+              <button
+                onClick={() => {
+                  if (!setSelectedSong || !setShowPlaylistPicker) return
+                  setSelectedSong(song)
+                  setShowPlaylistPicker(true)
+                }}
+              >
+                ➕
+              </button>
 
-<p className="text-gray-400 text-sm">
-{song.artist}
-</p>
+            </div>
+          </div>
 
-</div>
+        </div>
+      ))}
 
-))}
-
-</div>
-
-)
-
+    </div>
+  )
 }
 
 export default Playlist

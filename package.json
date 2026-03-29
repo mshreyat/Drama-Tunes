@@ -10,10 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "firebase": "^12.11.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-h5-audio-player": "^3.10.2",
-    "vite-plugin-pwa": "^1.2.0"
+    "react-h5-audio-player": "^3.10.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -27,6 +27,7 @@
     "globals": "^16.5.0",
     "postcss": "^8.5.8",
     "tailwindcss": "^3.4.19",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-plugin-pwa": "^1.2.0"
   }
 }
