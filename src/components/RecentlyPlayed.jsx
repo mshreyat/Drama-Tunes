@@ -28,7 +28,7 @@ function RecentlyPlayed({ setCurrentSong }) {
             <h2 className="text-xl font-bold mb-4">Recently Played</h2>
 
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                {recent.slice(0, 10).map((song, index) => (
+                {recent.slice(0, 4).map((song, index) => (
                     <div
                         key={index}
                         className="bg-gray-800 p-3 rounded cursor-pointer hover:bg-gray-700 group relative"

@@ -17,6 +17,7 @@ import { fetchSongs } from "./services/musicService"
 function App() {
 
     const [songs, setSongs] = useState([])
+    const [showPlayer, setShowPlayer] = useState(true)
     const [selectedPlaylistIndex, setSelectedPlaylistIndex] = useState(null)
     const [currentSong, setCurrentSong] = useState(null)
     const [selectedSong, setSelectedSong] = useState(null)
@@ -42,7 +43,6 @@ function App() {
 
     const moods = ["happy", "chill", "workout", "romantic"]
 
-    // fetch songs
     useEffect(() => {
         fetchSongs()
             .then(data => {
@@ -51,8 +51,8 @@ function App() {
                     title: song.trackName,
                     artist: song.artistName,
                     src: song.previewUrl,
-                    cover: song.artworkUrl100 || song.artworkUrl60 || "https://via.placeholder.com/100",
-                    mood: moods[Math.floor(Math.random() * moods.length)]
+                    // AFTER
+                    cover: song.artworkUrl100?.replace("100x100bb", "600x600bb") || "https://via.placeholder.com/600", mood: moods[Math.floor(Math.random() * moods.length)]
                 }))
                 setSongs(formattedSongs)
                 setLoading(false)
@@ -63,7 +63,6 @@ function App() {
             })
     }, [])
 
-    // auth state listener
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, (firebaseUser) => {
             setUser(firebaseUser)
@@ -72,10 +71,8 @@ function App() {
         return () => unsub()
     }, [])
 
-    // playlists
     const playlists = generatePlaylists(songs)
 
-    // filtering songs
     const filteredSongs = songs.filter(song => {
         const moodMatch = mood === "all" || song.mood === mood
         const searchMatch =
@@ -84,13 +81,9 @@ function App() {
         return moodMatch && searchMatch
     })
 
-    // favorites from localStorage
     const favorites = JSON.parse(localStorage.getItem("favorites")) || []
-
-    // liked songs from localStorage
     const likedSongs = JSON.parse(localStorage.getItem("likedSongs")) || []
 
-    // next song
     const nextSong = () => {
         if (!currentSong) return
         if (shuffle) {
@@ -102,27 +95,18 @@ function App() {
         setCurrentSong(songs[(index + 1) % songs.length])
     }
 
-    // previous song
     const prevSong = () => {
         if (!currentSong) return
         const index = songs.findIndex(song => song.id === currentSong.id)
         setCurrentSong(songs[(index - 1 + songs.length) % songs.length])
     }
 
-    // auth loading
     if (authLoading) return <h2 className="text-white p-6">Loading...</h2>
-
-    // not logged in
     if (!user) return <AuthPage onLogin={() => { }} />
-
-    // songs loading
     if (loading) return <h2 className="text-white p-6">Loading songs...</h2>
-
-    // error
     if (error) return <h2 className="text-red-500 p-6">{error}</h2>
 
     return (
-
         <div className="h-screen flex bg-gray-900 text-white">
 
             {/* Sidebar */}
@@ -132,7 +116,6 @@ function App() {
                     Dramatunes 🎵
                 </h1>
 
-                {/* Navigation */}
                 <button
                     className={`mb-3 p-2 rounded-lg text-left transition-all hover:bg-purple-700 ${view === "home" ? "bg-purple-600" : ""}`}
                     onClick={() => setView("home")}
@@ -154,10 +137,8 @@ function App() {
                     📚 Your Library
                 </button>
 
-                {/* Mood */}
                 <MoodSelector setMood={setMood} />
 
-                {/* Roast */}
                 <button
                     className="mt-6 bg-purple-600 px-3 py-2 rounded-lg hover:bg-purple-700 transition-all"
                     onClick={async () => {
@@ -171,23 +152,23 @@ function App() {
                     {roastLoading ? "Cooking... 🔥" : "Roast My Taste 🔥"}
                 </button>
 
-                {/* Logout — pinned to bottom of sidebar */}
-                <div className="mt-auto border-t border-gray-800 pt-4">
-                    <p className="text-xs text-gray-500 truncate mb-2">
+            </div>
+
+            {/* Main Content */}
+            <div className="flex-1 overflow-y-auto pb-28 md:pb-6 relative">
+
+                {/* Top-right logout button */}
+                <div className="absolute top-4 right-4 z-30 flex items-center gap-3">
+                    <span className="text-xs text-gray-500 hidden sm:block truncate max-w-[160px]">
                         👤 {user.email}
-                    </p>
+                    </span>
                     <button
-                        className="w-full bg-red-600/20 hover:bg-red-600/40 text-red-400 text-sm py-2 px-3 rounded-lg transition-all text-left"
+                        className="bg-red-600/20 hover:bg-red-600/40 text-red-400 text-sm py-1.5 px-3 rounded-lg transition-all"
                         onClick={() => signOut(auth)}
                     >
                         🚪 Logout
                     </button>
                 </div>
-
-            </div>
-
-            {/* Main Content */}
-            <div className="flex-1 overflow-y-auto pb-28 md:pb-6">
 
                 {/* HOME */}
                 {view === "home" && (
@@ -210,7 +191,6 @@ function App() {
                                 ))}
                             </div>
 
-                            {/* Songs based on mood */}
                             <div className="p-6">
                                 <h2 className="text-xl font-bold mb-4 capitalize">
                                     {mood === "all" ? "All Songs" : `${mood} Mix`}
@@ -228,7 +208,7 @@ function App() {
 
                 {/* SEARCH */}
                 {view === "search" && (
-                    <div className="p-6">
+                    <div className="p-6 pt-14">
                         <input
                             type="text"
                             placeholder="Search songs..."
@@ -245,9 +225,7 @@ function App() {
                                         title: song.trackName,
                                         artist: song.artistName,
                                         src: song.previewUrl,
-                                        cover: song.artworkUrl100
-                                            ? song.artworkUrl100.replace("100x100", "300x300")
-                                            : "https://via.placeholder.com/300",
+                                        cover: song.artworkUrl100?.replace("100x100bb", "600x600bb") || "https://via.placeholder.com/600",
                                         mood: moods[Math.floor(Math.random() * moods.length)]
                                     })))
                                     return
@@ -263,7 +241,8 @@ function App() {
                                         title: song.trackName,
                                         artist: song.artistName,
                                         src: song.previewUrl,
-                                        cover: song.artworkUrl100,
+
+                                        cover: song.artworkUrl100?.replace("100x100bb", "600x600bb") || "https://via.placeholder.com/600",
                                         mood: moods[Math.floor(Math.random() * moods.length)]
                                     }))
                                     setSongs(formattedSongs)
@@ -310,7 +289,7 @@ function App() {
                             ))}
                         </div>
 
-                        <h2 className="text-xl font-bold mb-4">Your Library</h2>
+                        <h2 className="text-xl font-bold mb-4">Your Favourites</h2>
                         <Playlist
                             songs={[...favorites, ...likedSongs]}
                             setCurrentSong={setCurrentSong}
@@ -398,14 +377,6 @@ function App() {
                 >
                     <span className="text-lg">{roastLoading ? "⏳" : "🔥"}</span>
                     <span>Roast</span>
-                </button>
-
-                <button
-                    className="flex flex-col items-center text-xs text-red-400"
-                    onClick={() => signOut(auth)}
-                >
-                    <span className="text-lg">🚪</span>
-                    <span>Logout</span>
                 </button>
 
             </div>

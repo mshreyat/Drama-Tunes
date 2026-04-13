@@ -2,59 +2,59 @@ import { useEffect, useState } from "react"
 import { ref, onValue } from "firebase/database"
 import { db } from "../firebase"
 
-function Favorites(){
+function Favorites() {
 
-const [favorites,setFavorites] = useState([])
+    const [favorites, setFavorites] = useState([])
 
-useEffect(() => {
+    useEffect(() => {
 
-const favRef = ref(db, "favorites")
+        const favRef = ref(db, "favorites")
 
-onValue(favRef, (snapshot) => {
+        onValue(favRef, (snapshot) => {
 
-const data = snapshot.val()
+            const data = snapshot.val()
 
-if(data){
-const favList = Object.values(data)
-setFavorites(favList)
-}
+            if (data) {
+                const favList = Object.values(data)
+                setFavorites(favList)
+            }
 
-})
+        })
 
-},[])
+    }, [])
 
-if(favorites.length === 0) return null
+    if (favorites.length === 0) return null
 
-return(
+    return (
 
-<div className="p-6">
+        <div className="p-6">
 
-<h2 className="text-xl font-bold mb-4">
-❤️ Favorites
-</h2>
+            <h2 className="text-xl font-bold mb-4">
+                ❤️ Favorites
+            </h2>
 
-<div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
 
-{favorites.map(song => (
+                {favorites.map(song => (
 
-<div
-key={song.id}
-className="bg-gray-800 p-3 rounded"
->
+                    <div
+                        key={song.id}
+                        className="bg-gray-800 p-3 rounded"
+                    >
 
-<img src={song.cover} className="rounded mb-2"/>
+                        <img src={song.cover} className="rounded mb-2" />
 
-<p className="text-sm">{song.title}</p>
+                        <p className="text-sm">{song.title}</p>
 
-</div>
+                    </div>
 
-))}
+                ))}
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-)
+    )
 
 }
 
